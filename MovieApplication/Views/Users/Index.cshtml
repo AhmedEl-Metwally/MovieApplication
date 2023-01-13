@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<UserViewModel>
+
+
+  @{
+        ViewData["Title"] = "Users";
+   }
+
+<h1>Users</h1>
+
+<table class=" table table-striped m-4">
+      <thead>
+          <tr class=" bg-primary text-white">
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>UserName</th>
+              <th>Email</th>
+              <th>Roles</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+
+    <tbody>
+        @foreach (var User in Model)
+            {
+                <tr>
+                    <td>@User.FirstName</td>
+                    <td>@User.LastName</td>
+                    <td>@User.UserName</td>
+                    <td>@User.Email</td>
+                    <td>@string.Join(" , ", User.Roles.ToArray())</td>
+                    <td>
+                        <a class="btn btn-primary" asp-contriller="Users" asp-action="Manage Roles" asp-route-userId="@User.Id">Manage Roles</a>
+                    </td>
+                </tr>
+            }
+    </tbody>
+
+</table>
+
+
+
+}
