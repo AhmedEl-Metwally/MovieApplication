@@ -8,6 +8,8 @@
 
 <h1>Users</h1>
 
+<a asp-action="Add" class="btn btn-primary">Add New</a>
+
 <table class=" table table-striped m-4">
       <thead>
           <tr class=" bg-primary text-white">
@@ -30,7 +32,11 @@
                     <td>@User.Email</td>
                     <td>@string.Join(" , ", User.Roles.ToArray())</td>
                     <td>
-                        <a class="btn btn-primary" asp-contriller="Users" asp-action="Manage Roles" asp-route-userId="@User.Id">Manage Roles</a>
+                        <a class="btn btn-primary" asp-contriller="Users" asp-action="Manage Roles" asp-route-userId="@User.Id"> Roles</a>
+                        <a class="btn btn-outline-primary" asp-contriller="Users" asp-action=" Edit" asp-route-userId="@User.Id"> Profile</a>
+                        <a href="javascript:;" class="btn btn-outline-danger js-delete" data-id="@User.Id"> Delete </a>
+
+
                     </td>
                 </tr>
             }
@@ -40,4 +46,35 @@
 
 
 
-}
+@section Scripts{
+<script>
+const { Callbacks } = require("jquery");
+
+    $(document).ready(function () {
+        $('.js-delete').on('click', function () {
+            var btn = $(this);
+
+            var resuit = confirm("Are you sure that you need to delete this user");
+
+            if (resuit) {
+                console.log(btn.data('id'));
+            }
+            Callback: function(resuit) {
+                if (resuit) {
+                    $.ajax({
+                        url: '/api/user/?userId' + btn.data("id"),
+                        method: 'DELETE',
+                        success: function () {
+                            btn - parents('tr').fadeOut();
+                            alert('User delete');
+                        },
+                        error: function () {
+                            alert('something went wrong')
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+ }
